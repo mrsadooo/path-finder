@@ -48,7 +48,11 @@ export default class AStar extends Path {
           nextF = nextG + metric(next, goal);
           visited[nextId] = VISITED;
 
-          push(next, nextF, opened, f);
+          if (Number.isFinite(nextG) === false) {
+            closed[nextId] = CLOSED;
+          } else {
+            push(next, nextF, opened, f);
+          }
         } else if (nextG >= g[nextId]) {
           continue;
         }
