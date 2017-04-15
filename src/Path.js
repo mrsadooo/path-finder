@@ -4,7 +4,7 @@ export default class Path {
     this.neighbours = neighbours;
   }
 
-  find(start, goal) {
+  async find(start, goal) {
     throw new ReferenceError(`${this.constructor.name}#find(Path.Position start, Path.Position goal) is not implemented.`);
   }
 }

@@ -13,13 +13,18 @@ describe('AStar', () => {
   });
 
   describe('#find', () => {
-    it('should return path with single start point for same start and goal', () => {
+    it('should return path with single start point for same start and goal', done => {
       const
         a = [0,0],
         b = [0,0],
         path = new AStar({ metric });
 
-      expect(path.find(a, b)).to.eql([a]);
+      path
+        .find(a, b)
+        .then(points => {
+          expect(points).to.eql([a])
+          done();
+        })
     });
   });
 });

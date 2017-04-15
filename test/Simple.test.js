@@ -43,20 +43,22 @@ function contains(point, path) {
 
 describe('AStar', () => {
   describe('#find', () => {
-    it('returns valid path for no obstacles', () => {
-      const path = new AStar({ metric, neighbours }).find([0,0], [5,5]);
-
-      expect(path).to.eql([ [0,0], [1,1], [2,2], [3,3], [4,4], [5,5] ]);
+    it('returns valid path for no obstacles', done => {
+      new AStar({ metric, neighbours }).find([0,0], [5,5]).then(path => {
+        expect(path).to.eql([ [0,0], [1,1], [2,2], [3,3], [4,4], [5,5] ]);
+        done();
+      });
     });
 
     samples.forEach((sample, index) => {
       const result = draw(sample.path, sample.map);
 
-      it(`returns valid path for sample no: ${index}`, () => {
+      it(`returns valid path for sample no: ${index}`, done => {
         const metric = mapMetric(sample.map);
-        const path = new AStar({ metric, neighbours }).find(sample.from, sample.to);
-
-        expect(draw(path, sample.map)).to.eql(result);
+        new AStar({ metric, neighbours }).find(sample.from, sample.to).then(path => {
+          expect(draw(path, sample.map)).to.eql(result);
+          done();
+        });
       })
     })
   });

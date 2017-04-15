@@ -1,7 +1,7 @@
 import Path from '../Path';
 
 export default class AStar extends Path {
-  find(start, goal) {
+  async find(start, goal) {
     const
       CLOSED = true,
       VISITED = true,
@@ -41,11 +41,14 @@ export default class AStar extends Path {
           continue;
         }
 
-        const nextG = g[currentId] + metric(current, next);
+        let nextCost = await metric(current, next);
         let nextF = 0;
 
+        const nextG = g[currentId] + nextCost;
+
         if (visited[nextId] !== VISITED) {
-          nextF = nextG + metric(next, goal);
+          nextCost = await metric(next, goal);
+          nextF = nextG + nextCost;
           visited[nextId] = VISITED;
 
           if (Number.isFinite(nextG) === false) {
