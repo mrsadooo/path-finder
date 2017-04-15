@@ -6,6 +6,11 @@ Currently supports only A* algorithm.
 
 ## Basic usage
 
+The api is promise-based, so to perform a search you need to 
+either wrap the result in ```.then | .catch``` or
+use ```async | await``` syntax.
+
+
 ```javascript
 import { AStar } from 'path-finder';
 
@@ -28,7 +33,10 @@ function neighbours(point) {
 const path = new AStar({ metric, neighbours });
 
 // And do the search!
-path.find([0,0], [5,5]);
+path.find([0,0], [5,5]).then(result => console.log(result));
+
+// alternatively
+const result = await path.find([0,0], [5,5]);
 ```
 
 No obstacles there, so as a result you should get 
@@ -61,7 +69,7 @@ class GMapsPoint {
 path.find(
   new GMapsPoint(50.085922, 19.975505), 
   new GMapsPoint(50.085922, 19.975505)
-);
+).then(result => console.log(result));
 ```
 
 Of course you need to prepare ```neighbours``` method, to 
